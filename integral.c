@@ -16,7 +16,8 @@
  */
 double f( double x )
 {
-    return 3*sin(x/4) + 1.45; 
+    return 3*sin(x/4) + 1.45;
+//    return 3*x + 1.45; 
 }
 
 double f_test( double x )
@@ -206,17 +207,19 @@ void numerical_integration_serial( void )
 
     printf("Estimate Integral: %f\n\n\n",estimate_integral);
 }
+
 int main(void)
 { 
     printf(" \n\n\t\t TESTING Numerical Integration \n\n");
 
-    long int num_subdivisions = 10;
+    long int num_subdivisions = (int)1e7;
     double estimate_integral;
 
     estimate_integral = numerical_integration( f, 1, 11, num_subdivisions );
     printf("Serial --- Estimate Integral: %f\n",estimate_integral);
 
-    estimate_integral = parallel_numerical_integratio( f, 1, 11, num_subdivisions, 2 );
+    estimate_integral = parallel_numerical_integratio( f, 1, 11, 
+    num_subdivisions, 4 );
     printf("Parallel --- Estimate Integral: %f\n\n\n",estimate_integral);
 
     return 0;

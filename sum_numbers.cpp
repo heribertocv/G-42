@@ -206,21 +206,34 @@ void sum_serial()
 
 int main()
 {
+    time_t tic, toc;
+
     printf(" \n\n sum numbers \n\n");
 
     int from_number = 0;
-    int to_number = 100; //(int)1e9;
+    int to_number = (int)1e9;
 
     printf( "from_number = %d \n", from_number);
     printf( "to_number = %d \n", to_number);
 
     printf("\nprocessing ...\n");
 
-    long int result = parallel_sum_numbers(from_number,to_number, 2);
-    printf("Parallel --- Total result:  %ld\n", result);
+    int num_sub_process = 8;
 
+    tic = clock();
     long int result2 = sum_numbers_v1(from_number, to_number);
-    printf("Serial --- Total result:  %ld\n", result2);
+    toc = clock();
+    printf(" took %f secs\n", (double)(toc - tic)/CLOCKS_PER_SEC);
+
+    printf("Serial --- Total result:  %ld\n\n", result2);
+
+
+    tic = clock();
+    long int result = parallel_sum_numbers(from_number,to_number, num_sub_process);
+    toc = clock();
+    printf(" took %f secs\n", (double)(toc - tic)/CLOCKS_PER_SEC);
+    printf("Parallel %d slaves--- Total result:  %ld\n\n", num_sub_process, result);
+
 
     printf("\n\n\n");
 
